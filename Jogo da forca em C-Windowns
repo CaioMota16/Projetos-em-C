@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+int main() {
+    int opcao, i, vida = 6, tamanho, win = 0, lost = 0;
+    char palavra[201];
+    char letra, dica[30];
+    char letra_certa[201] = {0};
+    char menu[200] = "[1]-Jogar\n[2]-Pontuação\n[3]-Sair do jogo\n";
+    setlocale(LC_ALL, "Portuguese");
+    /* O boneco do jogo ainda não foi feito, mas pretendo fazer em breve */
+    while (1) {
+	
+	    printf("-----Bem vindo ao jogo da forca-----\n");
+	    printf("%s", menu);
+	    printf("------------------------------------\n");
+	    printf("Seleção: ");
+	    scanf("%d", &opcao);
+	    getchar(); 
+	    memset(letra_certa, 0, sizeof(letra_certa)); 
+        vida = 6;
+	    
+	    switch(opcao) {
+	        case 1:
+	            printf("DIGITE A PALAVRA:\n");
+	            scanf("%s", palavra);
+	            printf("DIGITE A DICA:\n");
+	            scanf("%s", dica);
+	            printf("Agora passe o computador ao seu amigo");
+	            tamanho = strlen(palavra);
+	            system("cls"); 
+	
+	            printf("!!!!!!!!!!!!!!!Bem vindo ao jogo da forca!!!!!!!!!!!!!\n");
+	            printf("Você tem 6 vidas!\n");
+	            printf("Bom jogo!\n");
+	            system ("pause");
+	            getchar(); 
+	            system("cls"); 
+	
+	            printf("Dica: %s", dica);
+	            printf("\nQuantidade de letras: %d", tamanho);
+	            printf("\nVidas: %d\n", vida);
+	            for(i = 0; i < tamanho; i++) {
+	                printf("_ ");
+	            }
+	            printf("\n");
+	
+	            while (vida > 0) {
+	                int found = 0; 
+	                printf("Digite uma letra: ");
+	                scanf(" %c", &letra); 
+	
+	                for(i = 0; i < tamanho; i++) {
+	                    if(palavra[i] == letra) {
+	                        letra_certa[i] = letra;
+	                        found = 1;
+	                    }
+	                }
+	
+	                if(!found) {
+	                    vida--;
+	                }
+	
+	                for(i = 0; i < tamanho; i++) {
+	                    if(letra_certa[i] != 0) {
+	                        printf("%c ", letra_certa[i]);
+	                    } else {
+	                        printf("_ ");
+	                    }
+	                }
+	
+	                printf("\nVidas restantes: %d\n", vida);
+	
+	                if (strncmp(palavra, letra_certa, tamanho) == 0) {
+	                    printf("Parabéns!!!\nVocê ganhou o jogo\n");
+	                    win++;
+	                    break;
+	                }
+	            }
+	
+	            if(vida == 0) {
+	                printf("Você perdeu o jogo, a palavra era: %s\n", palavra);
+	                lost++;
+	            }
+	            break;
+	            
+	        case 2:
+	            printf("Você ganhou %d vezes\n", win);
+	            printf("Você perdeu %d vezes\n", lost);
+	            break;
+	        
+	        case 3:
+	            printf("Saindo do jogo...\n");
+	            exit(0);
+	            break;
+	
+	        default:
+	            printf("Opção inválida, digite somente os números indicados\n");
+	            break;
+	    }
+	}
+    return 0;
+}
